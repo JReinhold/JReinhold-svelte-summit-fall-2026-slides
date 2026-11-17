@@ -179,7 +179,7 @@ html:not(.dark) .slidev-layout pre.slidev-code,
 html:not(.dark) .slidev-layout .slidev-code-wrapper pre { border: 1.5px solid #cbd5e1 !important; }
 html:not(.dark) .slidev-layout .tile pre.slidev-code,
 html:not(.dark) .slidev-layout .tile .slidev-code-wrapper pre { border: 0 !important; }
-.tile .tag { background: #fff; }
+.tile .tag { background: #ffedd5; }
 
 /* Links the audience types by hand: big, mono, dark. */
 .links { display: grid; justify-items: center; gap: 0.2rem; margin-top: 2rem; }
