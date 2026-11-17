@@ -54,7 +54,7 @@ layout: figure
 
 # Storybook
 
-![Storybook with the PostEditor stories](/img/storybook-posteditor.png)
+![Storybook with the Input component, its stories and its controls](/img/storybook-input.png)
 
 ---
 layout: section
