@@ -15,7 +15,7 @@
       <!-- Sources -->
       <g v-for="(s, i) in sources" :key="s.name" :transform="`translate(0 ${3 + i * 140})`">
         <rect class="box" x="1" y="0" width="214" height="110" rx="9" />
-        <path class="icon" transform="translate(20 38)" d="M3 1h13l8 8v24H3zM16 1v8h8" />
+        <path class="icon" transform="translate(18 38)" :d="s.icon" />
         <text class="name" x="62" y="52">{{ s.name }}</text>
         <text class="sub mono" x="62" y="76">{{ s.file }}</text>
       </g>
@@ -85,9 +85,10 @@
 
 <script setup lang="ts">
 const sources = [
-  { name: 'Components', file: '.svelte' },
-  { name: 'Stories', file: '.stories.svelte' },
-  { name: 'Docs', file: '.mdx' },
+  // Storybook's own sidebar icons: a component, a story (bookmark), a docs page.
+  { name: 'Components', file: '.svelte', icon: 'M2 4h11v11H2zM2 20h11v11H2zM18 20h11v11H18zM23.5 2l7.5 7.5-7.5 7.5L16 9.5z' },
+  { name: 'Stories', file: '.stories.svelte', icon: 'M6 2h20v30l-10-8-10 8z' },
+  { name: 'Docs', file: '.mdx', icon: 'M4 1h15l8 8v24H4zM19 1v8h8M9 16h13M9 22h13M9 28h8' },
 ];
 </script>
 

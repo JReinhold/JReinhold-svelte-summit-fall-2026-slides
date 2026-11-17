@@ -5,7 +5,7 @@
  * real. The story test runs one component in the browser and puts a mock in
  * place of the remote functions, so it needs no backend and can show any state.
  */
-const layers = ['SvelteKit server', 'Remote functions', 'Database'];
+const layers = ['SvelteKit server', 'Remote functions / API calls', 'Database'];
 const states = ['loading', 'empty', 'error'];
 </script>
 
@@ -41,7 +41,7 @@ const states = ['loading', 'empty', 'error'];
         </div>
       </section>
 
-      <section class="panel">
+      <section v-click class="panel">
         <h3>Story test</h3>
         <div class="stack story">
           <div class="browser">
@@ -66,7 +66,7 @@ const states = ['loading', 'empty', 'error'];
           </div>
           <div class="box mock">
             <span class="pill mono">mock</span>
-            <span class="name">Remote functions</span>
+            <span class="name">Remote functions / API calls</span>
           </div>
         </div>
         <div class="notes">

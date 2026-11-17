@@ -2,8 +2,12 @@
 /**
  * Panels that compare what is real, mocked or absent in each way to test a
  * SvelteKit remote function. Each panel comes in on a click. The first slot
- * shows the production app, and the unit test then takes its place.
+ * shows the application from the start, and the unit test then takes its place.
  */
+import { useSlideContext } from '@slidev/client';
+
+const { $clicks } = useSlideContext();
+
 type State = 'plain' | 'real' | 'mock' | 'absent';
 
 interface Panel {
@@ -16,19 +20,21 @@ interface Panel {
   input?: string;
   /** Grid column of the panel. */
   column: number;
-  /** The click that shows it, or [from, until]. */
-  click: number | [number, number];
+  /** The click that shows it. The application has none: it is there from the start. */
+  click?: number;
+  /** The click that hides it again. */
+  until?: number;
 }
 
 const panels: Panel[] = [
   {
-    title: 'Production app',
+    title: 'Application',
     component: 'plain',
     runtime: 'plain',
     handler: 'plain',
     deps: 'plain',
     column: 1,
-    click: [1, 2],
+    until: 1,
   },
   {
     title: 'Unit test',
@@ -38,7 +44,7 @@ const panels: Panel[] = [
     deps: 'mock',
     input: 'mockRequestEvent()',
     column: 1,
-    click: 2,
+    click: 1,
   },
   {
     title: 'Component test',
@@ -47,7 +53,7 @@ const panels: Panel[] = [
     handler: 'mock',
     deps: 'absent',
     column: 2,
-    click: 5,
+    click: 4,
   },
   {
     title: 'Component + remote handler test',
@@ -56,11 +62,17 @@ const panels: Panel[] = [
     handler: 'real',
     deps: 'mock',
     column: 3,
-    click: 8,
+    click: 7,
   },
 ];
 
 const deps = ['Database', 'Email'];
+
+// The code overlays in slides.md register the clicks; the panels only read the count.
+function isShown(panel: Panel) {
+  const now = $clicks.value;
+  return now >= (panel.click ?? 0) && !(panel.until !== undefined && now >= panel.until);
+}
 </script>
 
 <template>
@@ -69,9 +81,8 @@ const deps = ['Database', 'Email'];
       <section
         v-for="panel in panels"
         :key="panel.title"
-        v-click="panel.click"
         class="panel"
-        :style="{ gridColumn: panel.column }"
+        :style="{ gridColumn: panel.column, visibility: isShown(panel) ? 'visible' : 'hidden' }"
       >
         <h3>{{ panel.title }}</h3>
         <div class="stack">

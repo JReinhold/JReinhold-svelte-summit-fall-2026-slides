@@ -79,7 +79,7 @@ html .slidev-layout.bento { padding: 1.25rem; --slidev-code-font-size: 12px; --s
 .tile .slidev-code-wrapper { margin: 0 !important; }
 .tile pre.slidev-code { background: none !important; border: 0 !important; padding: 0 !important; margin: 0 !important; }
 .tile .tag { display: inline-block; vertical-align: 3px; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0; color: #c2410c; background: #ffedd5; }
-.tile.hero { grid-column: 1 / span 8; grid-row: 1 / span 6; padding: 18px 20px; color: #fff; border: 0; background: radial-gradient(120% 90% at 100% 0%, #ff3e00 0%, transparent 65%), linear-gradient(155deg, #ff4785, #e0296b); }
+.tile.hero { grid-column: 1 / span 8; grid-row: 1 / span 6; padding: 18px 20px; color: #fff; border: 0; background: linear-gradient(215deg, #0d64ca 0%, #7a3fb5 48%, #e0296b 100%); }
 .tile.hero p { font-size: 15px; font-weight: 800; }
 .tile.hero h2 { font-size: 46px; line-height: 1; font-weight: 900; letter-spacing: -0.03em; margin: 0; }
 .tile.hero img { width: 54px; align-self: flex-end; box-shadow: none !important; position: absolute; }
@@ -141,3 +141,22 @@ html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-r
   line-height: 1.2;
 }
 .dg .mono { font-family: var(--mono); font-variant-ligatures: none; }
+
+html .slidev-layout.code-15 { --slidev-code-font-size: 15px; --slidev-code-line-height: 1.5; }
+
+/* Bento tiles: a slight tint each, so the grid reads as a set of cards. */
+.tile.csf { background: linear-gradient(160deg, #ffffff, #fff1ea); }
+.tile.factories { background: linear-gradient(160deg, #ffffff, #e8f3ff); }
+.tile.newdocs { background: linear-gradient(100deg, #ffffff, #fff0f5); }
+.tile.mocking { background: linear-gradient(160deg, #ffffff, #eef0ff); }
+.tile.agentdocs { background: linear-gradient(160deg, #ffffff, #e8f3ff); }
+.tile.tests { background: linear-gradient(160deg, #ffffff, #e9f9f1); }
+.tile.review { background: linear-gradient(160deg, #ffffff, #fff0f5); }
+.tile.remote { background: linear-gradient(160deg, #ffffff, #fff6e0); }
+.tile { border-color: #cbd5e1; }
+
+/* Links the audience types by hand: big, mono, dark. */
+.links { display: grid; justify-items: center; gap: 0.2rem; margin-top: 2rem; }
+.links span { font-size: 1.05em; font-weight: 700; color: #475569; margin-top: 1rem; }
+.links b { font-family: var(--slidev-code-font-family); font-size: 1.75em; font-weight: 700; letter-spacing: -0.02em; color: #1e293b; }
+html .slidev-layout.end .slidev-code-wrapper { margin: 2rem 0 0; text-align: left; }

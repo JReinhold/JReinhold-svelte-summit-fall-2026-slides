@@ -35,26 +35,18 @@ layout: statement
 # But not <span class="sb-gradient-text">your</span> Svelte.
 
 ---
-layout: statement
----
-
-# Know · Verify · Review
-
----
-layout: intro
----
-
-# Jeppe Reinhold
-
-Storybook's Svelte integration · Chromatic
-
----
 layout: figure
 ---
 
 # Storybook
 
 ![Storybook with the Input component, its stories and its controls](/img/storybook-input.png)
+
+---
+layout: statement
+---
+
+# Know · Verify · Review
 
 ---
 layout: section
@@ -265,7 +257,7 @@ Scroll to the agent's `npx storybook tools test run` and its result block. Point
 -->
 
 ---
-class: code-xs tight
+class: code-15 tight
 ---
 
 # Coming next: inspect
@@ -273,25 +265,18 @@ class: code-xs tight
 ```md
 $ npx storybook tools stories inspect --storyId posts-posteditor--submitting
 
-## posts-posteditor--submitting
-
 ### HTML
-<button class="button primary md" type="submit" disabled aria-busy="true">
+<button type="submit" disabled aria-busy="true">
   <span class="spinner"></span> Save changes
 </button>
-<a class="button ghost md" href="/posts/4">Cancel</a>
 
 ### CSS
-button.button.primary
-  background-color: rgb(168, 70, 31)
-  cursor: progress
+button.primary { cursor: progress }
 
 ### Accessibility tree
 - form "Edit post"
   - textbox "Title"
-  - textbox "Body"
   - button "Save changes" [disabled] [busy]
-  - link "Cancel"
 
 ### Screenshot
 /tmp/storybook/inspect/posts-posteditor--submitting.png
@@ -356,7 +341,7 @@ layout: center
 </div>
 </div>
 
-<p class="muted">Any agent. Any model.</p>
+<p class="muted">Any agent. Any harness. Any model.</p>
 
 ---
 class: bento
@@ -473,7 +458,7 @@ layout: section
 
 <TestScopes />
 
-<div v-click="[3, 4]" class="code-modal">
+<div v-click="[2, 3]" class="code-modal">
 
 ```ts
 import { mockRequestEvent, submitForm } from 'vitest-plugin-sveltekit/server.mock';
@@ -495,7 +480,7 @@ test('signing in sets the session cookie', async () => {
 
 </div>
 
-<div v-click="[6, 7]" class="code-modal">
+<div v-click="[5, 6]" class="code-modal">
 
 ```svelte
 <script module>
@@ -519,7 +504,7 @@ test('signing in sets the session cookie', async () => {
 
 </div>
 
-<div v-click="9" class="code-modal">
+<div v-click="8" class="code-modal">
 
 ```svelte
 <script module>
@@ -545,7 +530,7 @@ test('signing in sets the session cookie', async () => {
 </div>
 
 <!--
-Clicks: production app, unit test, unit test code, back, component test, story code, back, component + remote handler test, story code.
+Clicks: unit test, unit test code, back, component test, story code, back, component + remote handler test, story code.
 
 At the "Live stream" story code: SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
 Then show the `mockRemote` lines in one of the agent's new stories.
@@ -557,9 +542,12 @@ layout: center
 
 # Experimental. Not released yet.
 
-<img class="qr" src="/img/qr-example-app.png" />
-
-vitest-plugin-sveltekit.netlify.app
+<div class="links">
+  <span>Example app</span>
+  <b>vitest-plugin-sveltekit.netlify.app</b>
+  <span>Its Storybook</span>
+  <b>vitest-plugin-sveltekit.netlify.app/storybook</b>
+</div>
 
 ---
 layout: end
@@ -568,12 +556,12 @@ class: code-md
 
 # Storybook 11
 
-Beta today · stable in December
+Beta today · stable December 2026
 
-```sh
-npx storybook@next upgrade
+```md
+$ npx storybook@next upgrade
 ```
 
-<img class="qr" src="/img/qr-storybook-ai-docs.png" />
-
-storybook.js.org/docs/11/ai
+<div class="links">
+  <b>storybook.js.org/docs/11/ai</b>
+</div>

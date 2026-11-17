@@ -94,8 +94,8 @@ const unrelated = [
       </g>
 
       <!-- The command -->
-      <rect class="card" x="262" y="346" width="376" height="46" rx="9" />
-      <text class="cmd mono" x="450" y="375">storybook tools stories changed</text>
+      <rect class="card" x="232" y="346" width="436" height="46" rx="9" />
+      <text class="cmd mono" x="450" y="375">$ npx storybook tools stories changed</text>
     </svg>
   </div>
 </template>

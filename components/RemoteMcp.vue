@@ -1,8 +1,7 @@
 <!--
   How another team's agent reads your Storybook: you publish it to Chromatic,
   which serves it through an MCP server. The dashed path is the alternative:
-  host the MCP server yourself with @storybook/mcp. Either way, the server
-  only reads the manifest.
+  host the MCP server yourself with @storybook/mcp.
 -->
 <template>
   <div class="dg remote">
@@ -18,10 +17,7 @@
 
       <!-- Your Storybook -->
       <rect class="box" x="1" y="14" width="176" height="196" rx="9" />
-      <g class="icon" transform="translate(61 44) scale(1.55)">
-        <path d="M8 29V7a3 3 0 0 1 3-3h18v22H11a3 3 0 0 0 0 6h18" />
-        <path d="M14.5 11h9M14.5 16.5h9" />
-      </g>
+      <image href="/brand/storybook.svg" x="62" y="38" width="55" height="68" />
       <text class="name" x="89" y="150">Your Storybook</text>
 
       <path class="wire arrow" d="M186 112H228" />
@@ -65,14 +61,7 @@
       <rect class="box optional" x="237" y="292" width="176" height="104" rx="9" />
       <text class="alt" x="325" y="337">or self-host</text>
       <text class="cmd mono" x="325" y="364">@storybook/mcp</text>
-      <path class="wire dashed arrow-quiet" d="M419 344H491a12 12 0 0 0 12-12V224" />
-
-      <!-- What the server reads -->
-      <path class="wire arrow" d="M611 216V284" />
-      <text class="reads" x="621" y="256">reads</text>
-      <rect class="box" x="533" y="292" width="176" height="104" rx="9" />
-      <text class="alt" x="621" y="337">Manifest</text>
-      <text class="cmd mono" x="621" y="364">components.json</text>
+      <path class="wire dashed arrow-quiet" d="M419 344H549a12 12 0 0 0 12-12V224" />
     </svg>
   </div>
 </template>
