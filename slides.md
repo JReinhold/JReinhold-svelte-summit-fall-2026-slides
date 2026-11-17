@@ -148,7 +148,8 @@ class: code-14 tight
 $ npx storybook tools docs show --id ui-button
 
 # Button
-It starts an action, such as Publish or Delete.
+The button of the design system. It starts an action,
+such as Publish or Delete. …
 
 ## Props
 variant?: "primary" | "secondary" | "ghost" | "danger" = "primary";
@@ -450,7 +451,7 @@ npx storybook tools review create
 </div>
 <div class="tile remote">
 
-### Remote functions <span class="tag">experimental</span>
+### Remote functions <span class="tag">work in progress</span>
 
 ```ts
 mockRemote(getPosts)
@@ -472,9 +473,7 @@ layout: section
 
 <TestScopes />
 
----
-class: code-lg center-code
----
+<div v-click="[3, 4]" class="code-modal">
 
 ```ts
 import { mockRequestEvent, submitForm } from 'vitest-plugin-sveltekit/server.mock';
@@ -492,9 +491,9 @@ test('only a signed-in user can delete a post', async () => {
 });
 ```
 
----
-class: code-md center-code
----
+</div>
+
+<div v-click="[6, 7]" class="code-modal">
 
 ```svelte
 <Story
@@ -511,8 +510,27 @@ class: code-md center-code
 />
 ```
 
+</div>
+
+<div v-click="9" class="code-modal">
+
+```svelte
+<Story
+  name="Server mode"
+  beforeEach={seedDatabase}
+  play={async ({ canvas }) => {
+    // The real `getReadingStats` reads the seed: 266 views, 19 likes.
+    await expect(await canvas.findByText('266 views')).toBeVisible();
+  }}
+/>
+```
+
+</div>
+
 <!--
-SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
+Clicks: production app, unit test, unit test code, back, component test, story code, back, component + remote handler test, story code.
+
+At the "Live stream" story code: SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
 Then show the `mockRemote` lines in one of the agent's new stories.
 -->
 

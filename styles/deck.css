@@ -118,3 +118,8 @@ html .slidev-layout.code-14 .cols-doc { grid-template-columns: 3fr 7fr; }
 .msg.user .bubble { background: #1e293b; color: #fff; border-bottom-right-radius: 8px; }
 .msg.agent .bubble { background: #f1f5f9; border: 1px solid #cbd5e1; border-bottom-left-radius: 8px; display: flex; gap: 0.7rem; padding: 1.7rem 1.8rem; }
 .msg .dots i { width: 16px; height: 16px; border-radius: 50%; background: #64748b; }
+
+/* A code sample that opens over the slide on a click. */
+.code-modal { position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgb(255 255 255 / 0.82); --slidev-code-font-size: 15px; --slidev-code-line-height: 1.6; }
+.code-modal .slidev-code-wrapper { margin: 0 !important; }
+html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-radius: 14px; border: 1px solid #94a3b8 !important; box-shadow: 0 24px 60px rgb(15 23 42 / 0.22) !important; }

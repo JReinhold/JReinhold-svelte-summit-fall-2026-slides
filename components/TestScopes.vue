@@ -47,7 +47,7 @@ const panels: Panel[] = [
     handler: 'mock',
     deps: 'absent',
     column: 2,
-    click: 3,
+    click: 5,
   },
   {
     title: 'Component + remote handler test',
@@ -56,11 +56,11 @@ const panels: Panel[] = [
     handler: 'real',
     deps: 'mock',
     column: 3,
-    click: 4,
+    click: 8,
   },
 ];
 
-const deps = ['Database', 'Email / external API'];
+const deps = ['Database', 'Email'];
 </script>
 
 <template>
@@ -200,7 +200,7 @@ const deps = ['Database', 'Email / external API'];
   font-weight: 800;
 }
 .name.small {
-  font-size: 11.5px;
+  font-size: 15px;
   white-space: nowrap;
 }
 .sub {
