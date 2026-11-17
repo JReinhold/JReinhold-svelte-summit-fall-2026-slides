@@ -186,3 +186,12 @@ html:not(.dark) .slidev-layout .tile .slidev-code-wrapper pre { border: 0 !impor
 .links span { font-size: 1.05em; font-weight: 700; color: #475569; margin-top: 1rem; }
 .links b { font-family: var(--slidev-code-font-family); font-size: 1.75em; font-weight: 700; letter-spacing: -0.02em; color: #1e293b; }
 html .slidev-layout.end .slidev-code-wrapper { margin: 2rem 0 0 !important; text-align: left; }
+
+/* Wide, short tiles: round glows sized to the tile's height, side by side at the right end,
+   so they do not stretch into flat bands. */
+.tile.newdocs, .tile.review {
+  background:
+    radial-gradient(circle 190px at 100% -10%, oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 100%),
+    radial-gradient(circle 170px at 68% 125%, oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 100%),
+    #ffffff;
+}
