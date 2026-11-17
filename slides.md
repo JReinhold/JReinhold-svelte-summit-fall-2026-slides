@@ -49,12 +49,6 @@ layout: intro
 Storybook's Svelte integration · Chromatic
 
 ---
-layout: statement
----
-
-# ✋ Storybook + Svelte?
-
----
 layout: figure
 ---
 

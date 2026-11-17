@@ -61,7 +61,7 @@ defineProps<{ name: string; photo: string; handle?: string }>()
   height: 170px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center;
   margin-bottom: 0.6rem;
 }
 .name {
