@@ -219,7 +219,7 @@ class: tight
 class: code-sm
 ---
 
-# The agent breaks Publish
+# A story test fails
 
 ```md
 $ npx storybook tools test run
@@ -241,7 +241,7 @@ Failed: 1 component test failed.
 class: tight
 ---
 
-# And fixes it
+# The agent fixes it
 
 <BeforeAfter />
 
