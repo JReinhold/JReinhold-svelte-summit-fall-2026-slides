@@ -123,3 +123,21 @@ html .slidev-layout.code-14 .cols-doc { grid-template-columns: 3fr 7fr; }
 .code-modal { position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgb(255 255 255 / 0.82); --slidev-code-font-size: 14.5px; --slidev-code-line-height: 1.5; }
 .code-modal .slidev-code-wrapper { margin: 0 !important; }
 html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-radius: 14px; border: 1px solid #94a3b8 !important; box-shadow: 0 24px 60px rgb(15 23 42 / 0.22) !important; }
+
+/* Diagrams built in code (components/*.vue). They share these tokens and fill the slide under the headline. */
+.dg {
+  --real: #e0296b;
+  --real-bg: #fff0f5;
+  --real-ink: #b01653;
+  --ink: #1e293b;
+  --quiet: #475569;
+  --line: #cbd5e1;
+  --soft: #f6f8fb;
+  --mono: var(--slidev-code-font-family);
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.dg .mono { font-family: var(--mono); font-variant-ligatures: none; }

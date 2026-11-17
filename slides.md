@@ -84,21 +84,21 @@ class: tight
 
 ### Builds it again
 
-<img src="/img/way-builds-again.png" />
+<WayBuildsAgain />
 
 </div>
 <div v-click>
 
 ### Reads everything
 
-<img src="/img/way-reads-everything.png" />
+<WayReadsEverything />
 
 </div>
 <div v-click>
 
 ### Reads stale docs
 
-<img src="/img/way-stale-docs.png" />
+<WayStaleDocs />
 
 </div>
 </div>
@@ -194,20 +194,20 @@ Show the prompt. Scroll to the agent's `docs list` and `docs show` calls. Point 
 -->
 
 ---
-layout: figure
+class: tight
 ---
 
 # How it works
 
-![From stories to the component manifest to the agent](/img/diagram-how-it-works.png)
+<HowItWorks />
 
 ---
-layout: figure
+class: tight
 ---
 
 # For the whole team
 
-![The remote MCP server, published with Storybook](/img/diagram-remote-mcp.png)
+<RemoteMcp />
 
 ---
 layout: section
@@ -218,10 +218,10 @@ layout: section
 How does the agent verify its own UI?
 
 ---
-layout: figure
+class: tight
 ---
 
-![What each kind of test runs](/img/diagram-test-scope.png)
+<TestScopeCompare />
 
 ---
 class: code-sm
@@ -246,12 +246,12 @@ Failed: 1 component test failed.
 ```
 
 ---
-layout: figure
+class: tight
 ---
 
 # And fixes it
 
-![The submit button before and after the fix](/img/behavior-before-after.png)
+<BeforeAfter />
 
 ---
 layout: statement
@@ -317,12 +317,12 @@ Open the review link. Click three stories: the new page, the new drafts list, on
 -->
 
 ---
-layout: figure
+class: tight
 ---
 
 # How the review knows
 
-![The module graph from a changed file to its stories](/img/diagram-module-graph.png)
+<ModuleGraph />
 
 ---
 layout: center
