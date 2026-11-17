@@ -144,19 +144,29 @@ html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-r
 
 html .slidev-layout.code-15 { --slidev-code-font-size: 15px; --slidev-code-line-height: 1.5; }
 
-/* Bento tiles: a slight tint each, so the grid reads as a set of cards. */
-.tile.csf { background: linear-gradient(160deg, #ffffff, #fff1ea); }
-.tile.factories { background: linear-gradient(160deg, #ffffff, #e8f3ff); }
-.tile.newdocs { background: linear-gradient(100deg, #ffffff, #fff0f5); }
-.tile.mocking { background: linear-gradient(160deg, #ffffff, #eef0ff); }
-.tile.agentdocs { background: linear-gradient(160deg, #ffffff, #e8f3ff); }
-.tile.tests { background: linear-gradient(160deg, #ffffff, #e9f9f1); }
-.tile.review { background: linear-gradient(160deg, #ffffff, #fff0f5); }
-.tile.remote { background: linear-gradient(160deg, #ffffff, #fff6e0); }
+/* Bento tiles: a soft two-colour wash each, so the grid reads as a set of cards. */
+.tile.csf { background: linear-gradient(135deg, #fff0e6, #ffe9f1); }
+.tile.factories { background: linear-gradient(160deg, #e3f1ff, #efe8ff); }
+.tile.newdocs { background: linear-gradient(120deg, #ffe9f1, #efe8ff); }
+.tile.mocking { background: linear-gradient(140deg, #e6f0ff, #ffeaf2); }
+.tile.agentdocs { background: linear-gradient(150deg, #e2f6f5, #e6efff); }
+.tile.tests { background: linear-gradient(150deg, #e6f8ea, #e2f4fb); }
+.tile.review { background: linear-gradient(120deg, #efe8ff, #ffe9f1); }
+.tile.remote { background: linear-gradient(150deg, #fff4d9, #ffe8de); }
 .tile { border-color: #cbd5e1; }
+.tile.factories { grid-row: 1 / span 6; }
+.tile.newdocs { grid-column: 9 / span 9; }
+
+/* Code panels match the command cards in the diagrams. */
+:root { --slidev-code-radius: 9px; }
+html:not(.dark) .slidev-layout pre.slidev-code,
+html:not(.dark) .slidev-layout .slidev-code-wrapper pre { border: 1.5px solid #cbd5e1 !important; }
+html:not(.dark) .slidev-layout .tile pre.slidev-code,
+html:not(.dark) .slidev-layout .tile .slidev-code-wrapper pre { border: 0 !important; }
+.tile .tag { background: #fff; }
 
 /* Links the audience types by hand: big, mono, dark. */
 .links { display: grid; justify-items: center; gap: 0.2rem; margin-top: 2rem; }
 .links span { font-size: 1.05em; font-weight: 700; color: #475569; margin-top: 1rem; }
 .links b { font-family: var(--slidev-code-font-family); font-size: 1.75em; font-weight: 700; letter-spacing: -0.02em; color: #1e293b; }
-html .slidev-layout.end .slidev-code-wrapper { margin: 2rem 0 0; text-align: left; }
+html .slidev-layout.end .slidev-code-wrapper { margin: 2rem 0 0 !important; text-align: left; }

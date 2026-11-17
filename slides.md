@@ -354,7 +354,7 @@ Storybook 11 ♥ Svelte
 
 <img src="/brand/svelte.svg" />
 
-<h2>Svelte is<br>a core<br>framework</h2>
+<h2>Svelte is<br>now a core<br>framework</h2>
 
 </div>
 <div class="tile csf">
@@ -375,6 +375,9 @@ Storybook 11 ♥ Svelte
 ### Type-safe<br>CSF Factories
 
 ```ts
+import preview
+  from '#.storybook/preview';
+
 const { Story } = preview.meta({
   component: Button,
 });
@@ -390,7 +393,7 @@ storybook.js.org
 </div>
 <div class="tile mocking">
 
-### SvelteKit mocking,<br>the Storybook way
+### Simplified SvelteKit<br>mocking API
 
 ```ts
 import { goto } from '$app/navigation';
@@ -439,7 +442,7 @@ npx storybook tools review create
 ### Remote functions <span class="tag">work in progress</span>
 
 ```ts
-mockRemote(getPosts)
+mockRemote(listPosts)
   .mockResolvedValue(posts);
 ```
 
@@ -485,19 +488,19 @@ test('signing in sets the session cookie', async () => {
 ```svelte
 <script module>
   import { mockRemote } from 'vitest-plugin-sveltekit/remote.mock';
-  import { getPostCount } from './blog.remote.ts';
+  import { listPosts } from './blog.remote.ts';
 </script>
 
 <Story
-  name="Live stream"
+  name="Two posts"
   beforeEach={() => {
-    feed = mockRemote(getPostCount).mockStream(5);
+    mockRemote(listPosts).mockResolvedValue([
+      { id: 1, title: 'Hello Svelte Summit' },
+      { id: 2, title: 'Testing remote functions' },
+    ]);
   }}
   play={async ({ canvas }) => {
-    await expect(await canvas.findByText('5')).toBeVisible();
-
-    feed.emit(6);
-    await expect(await canvas.findByText('6')).toBeVisible();
+    await expect(await canvas.findByText('Hello Svelte Summit')).toBeVisible();
   }}
 />
 ```
@@ -532,7 +535,7 @@ test('signing in sets the session cookie', async () => {
 <!--
 Clicks: unit test, unit test code, back, component test, story code, back, component + remote handler test, story code.
 
-At the "Live stream" story code: SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
+After the component test code: SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
 Then show the `mockRemote` lines in one of the agent's new stories.
 -->
 
