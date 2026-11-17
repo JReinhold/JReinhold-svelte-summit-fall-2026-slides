@@ -1,6 +1,6 @@
 import { defineShikiSetup } from '@slidev/types'
 
-// Code panels are dark in both colour schemes, so both use the dark theme.
+// One light and one dark theme, to match the deck's colour scheme.
 export default defineShikiSetup(() => ({
-  themes: { dark: 'vitesse-dark', light: 'vitesse-dark' },
+  themes: { dark: 'vitesse-dark', light: 'github-light' },
 }))

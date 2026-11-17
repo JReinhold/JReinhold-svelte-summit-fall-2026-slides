@@ -234,12 +234,26 @@ layout: figure
 ![What each kind of test runs](/img/diagram-test-scope.png)
 
 ---
-layout: figure
+class: code-sm
 ---
 
 # The agent breaks Publish
 
-![The failing story test](/img/test-fail-output.png)
+```md
+$ npx storybook tools test run
+
+## Failing Stories
+### posts-posteditor--submitting
+expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <button class="button primary md svelte-g9c1iq" type="submit" />
+
+    at src/lib/blog/PostEditor.stories.svelte:241:112
+
+## Result
+Failed: 1 component test failed.
+```
 
 ---
 layout: figure
@@ -355,10 +369,113 @@ layout: center
 <p class="muted">Any agent. Any model.</p>
 
 ---
-layout: figure
+class: bento
 ---
 
-![What is new in Storybook 11 for Svelte](/img/bento-storybook11-svelte.png)
+<div class="bento-grid">
+<div class="tile hero">
+
+Storybook 11 ♥ Svelte
+
+<img src="/brand/svelte.svg" />
+
+<h2>Svelte is<br>a core<br>framework</h2>
+
+</div>
+<div class="tile csf">
+
+### Svelte CSF, built in
+
+```svelte
+<!-- Button.stories.svelte -->
+<Story name="Primary">Publish</Story>
+<Story name="Small" args={{ size: 'sm' }}>
+  Edit
+</Story>
+```
+
+</div>
+<div class="tile factories">
+
+### Type-safe<br>CSF Factories
+
+```ts
+const { Story } = preview.meta({
+  component: Button,
+});
+```
+
+</div>
+<div class="tile review">
+
+### Agent review
+
+```sh
+$ npx storybook tools review create
+```
+
+</div>
+<div class="tile newdocs">
+
+### New Svelte docs
+
+storybook.js.org
+
+</div>
+<div class="tile mocking">
+
+### SvelteKit mocking,<br>the Storybook way
+
+```ts
+import { goto } from '$app/navigation';
+import { page } from '$app/state';
+
+page.url = new URL('http://localhost/posts/new');
+expect(goto).toHaveBeenCalledWith('/posts/1');
+```
+
+</div>
+<div class="tile agentdocs">
+
+### Docs for agents
+
+```sh
+$ npx storybook tools docs list
+```
+
+</div>
+<div class="tile tests">
+
+### Story tests + a11y
+
+```sh
+$ npx storybook tools test run
+✓ 247 stories, no violations
+```
+
+</div>
+<div class="tile codedocs">
+
+### Docs from your code
+
+```svelte
+<!-- @component …
+@summary starts an action… -->
+/** `sm` for small places… */
+```
+
+</div>
+<div class="tile remote">
+
+### Remote functions <span class="tag">experimental</span>
+
+```ts
+mockRemote(getPosts)
+  .mockResolvedValue(posts);
+```
+
+</div>
+</div>
 
 ---
 layout: statement
@@ -368,7 +485,7 @@ layout: statement
 
 ---
 
-# vitest-plugin-sveltekit
+# `vitest-plugin-sveltekit`
 
 | Test | What runs |
 | --- | --- |

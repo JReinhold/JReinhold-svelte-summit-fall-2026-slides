@@ -13,8 +13,8 @@ defineProps<{ name: string; photo: string; handle?: string }>()
       <div class="name">{{ name }}</div>
       <div v-if="handle" class="handle"><img src="/brand/bluesky.png" alt="" />{{ handle }}</div>
       <div class="badges">
-        <div class="badge"><img src="/brand/storybook.svg" alt="" /><b>Storybook</b><span>Maintainer</span></div>
-        <div class="badge"><img src="/brand/chromatic.png" alt="" /><b>Chromatic</b><span>OSS Engineer</span></div>
+        <div class="badge"><img src="/brand/storybook.svg" alt="" /><b>Storybook</b><span>Core Maintainer</span></div>
+        <div class="badge"><img src="/brand/chromatic.png" alt="" /><b>Chromatic</b><span>Staff Engineer</span></div>
       </div>
     </div>
   </div>
@@ -80,7 +80,9 @@ defineProps<{ name: string; photo: string; handle?: string }>()
 }
 .badges {
   display: flex;
-  gap: 0.8rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
   margin-top: 1.4rem;
 }
 .badge {
