@@ -144,16 +144,32 @@ html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-r
 
 html .slidev-layout.code-15 { --slidev-code-font-size: 15px; --slidev-code-line-height: 1.5; }
 
-/* Bento tiles: a soft two-colour wash each, so the grid reads as a set of cards. */
-.tile.csf { background: linear-gradient(135deg, #fff0e6, #ffe9f1); }
-.tile.factories { background: linear-gradient(160deg, #e3f1ff, #efe8ff); }
-.tile.newdocs { background: linear-gradient(120deg, #ffe9f1, #efe8ff); }
-.tile.mocking { background: linear-gradient(140deg, #e6f0ff, #ffeaf2); }
-.tile.agentdocs { background: linear-gradient(150deg, #e2f6f5, #e6efff); }
-.tile.tests { background: linear-gradient(150deg, #e6f8ea, #e2f4fb); }
-.tile.review { background: linear-gradient(120deg, #efe8ff, #ffe9f1); }
-.tile.remote { background: linear-gradient(150deg, #fff4d9, #ffe8de); }
-.tile { border-color: #cbd5e1; }
+/* Bento tiles: white cards with two soft glows of brand colour in the right-hand corners,
+   away from the headline and the code. One hue family (blue, violet, pink) plus Svelte orange,
+   all at the same lightness, so the grid reads as one set. */
+.tile:not(.hero) {
+  --a: 255; --b: 300;
+  position: relative;
+  border: 1px solid rgb(15 23 42 / 0.09);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 24px -14px rgb(15 23 42 / 0.18);
+  background:
+    radial-gradient(ellipse 75% 95% at 100% 0%, oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 70%),
+    radial-gradient(ellipse 85% 85% at 100% 100%, oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 70%),
+    #ffffff;
+}
+/* A little grain keeps the soft blends from looking flat. */
+.tile:not(.hero)::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.tile.csf { --a: 45; --b: 0; }
+.tile.factories { --a: 255; --b: 300; }
+.tile.newdocs { --a: 0; --b: 320; }
+.tile.mocking { --a: 280; --b: 350; }
+.tile.agentdocs { --a: 240; --b: 280; }
+.tile.tests { --a: 280; --b: 255; }
+.tile.review { --a: 320; --b: 0; }
+.tile.remote { --a: 70; --b: 30; }
 .tile.factories { grid-row: 1 / span 6; }
 .tile.newdocs { grid-column: 9 / span 9; }
 
