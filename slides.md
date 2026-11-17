@@ -477,17 +477,19 @@ layout: section
 
 ```ts
 import { mockRequestEvent, submitForm } from 'vitest-plugin-sveltekit/server.mock';
+import { createPost } from '#lib/posts.remote.ts';
+import { signIn } from '#lib/account.remote.ts';
 
 test('the handler reports a short title', async () => {
   const { issues } = await submitForm(createPost, { title: 'Hi' });
   expect(issues[0].message).toBe('Title must be at least 3 characters');
 });
 
-test('only a signed-in user can delete a post', async () => {
-  await expect(deletePost(1)).rejects.toMatchObject({ status: 403 });
+test('signing in sets the session cookie', async () => {
+  await signIn({ name: 'svelty', password: 'secret' });
 
-  mockRequestEvent({ locals: { user: { name: 'svelty' } } });
-  await deletePost(1);
+  const event = mockRequestEvent();
+  expect(event.cookies.get('session')).toBeDefined();
 });
 ```
 
@@ -496,6 +498,11 @@ test('only a signed-in user can delete a post', async () => {
 <div v-click="[6, 7]" class="code-modal">
 
 ```svelte
+<script module>
+  import { mockRemote } from 'vitest-plugin-sveltekit/remote.mock';
+  import { getPostCount } from './blog.remote.ts';
+</script>
+
 <Story
   name="Live stream"
   beforeEach={() => {
@@ -515,12 +522,22 @@ test('only a signed-in user can delete a post', async () => {
 <div v-click="9" class="code-modal">
 
 ```svelte
+<script module>
+  import { db } from '#lib/server/db.ts';
+  import { sendEmail } from '#lib/server/email.ts';
+</script>
+
+<!-- The real publishPost handler runs. Only the database and email are mocked. -->
 <Story
-  name="Server mode"
-  beforeEach={seedDatabase}
-  play={async ({ canvas }) => {
-    // The real `getReadingStats` reads the seed: 266 views, 19 likes.
-    await expect(await canvas.findByText('266 views')).toBeVisible();
+  name="Publish a draft"
+  beforeEach={async () => {
+    await db.insert(posts).values({ title: 'My draft', published: false });
+  }}
+  play={async ({ canvas, userEvent }) => {
+    await expect(await canvas.findByText('My draft')).toBeVisible();
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Publish' }));
+    await expect(sendEmail).toHaveBeenCalledWith('subscribers', 'My draft');
   }}
 />
 ```
