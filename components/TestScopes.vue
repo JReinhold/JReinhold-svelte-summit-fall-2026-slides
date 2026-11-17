@@ -1,9 +1,10 @@
 <script setup lang="ts">
 /**
- * Three panels that compare what is real, mocked or absent in each way to
- * test a SvelteKit remote function. Static: no animation, no hover.
+ * Panels that compare what is real, mocked or absent in each way to test a
+ * SvelteKit remote function. Each panel comes in on a click. The first slot
+ * shows the production app, and the unit test then takes its place.
  */
-type State = 'real' | 'mock' | 'absent';
+type State = 'plain' | 'real' | 'mock' | 'absent';
 
 interface Panel {
   title: string;
@@ -13,9 +14,22 @@ interface Panel {
   deps: State;
   /** Shown in the gap above the handler. */
   input?: string;
+  /** Grid column of the panel. */
+  column: number;
+  /** The click that shows it, or [from, until]. */
+  click: number | [number, number];
 }
 
 const panels: Panel[] = [
+  {
+    title: 'Production app',
+    component: 'plain',
+    runtime: 'plain',
+    handler: 'plain',
+    deps: 'plain',
+    column: 1,
+    click: [1, 2],
+  },
   {
     title: 'Unit test',
     component: 'absent',
@@ -23,20 +37,26 @@ const panels: Panel[] = [
     handler: 'real',
     deps: 'mock',
     input: 'mockRequestEvent()',
+    column: 1,
+    click: 2,
   },
   {
-    title: 'Component test, mocked',
+    title: 'Component test',
     component: 'real',
     runtime: 'real',
     handler: 'mock',
     deps: 'absent',
+    column: 2,
+    click: 3,
   },
   {
-    title: 'Component test, real',
+    title: 'Component + remote handler test',
     component: 'real',
     runtime: 'real',
     handler: 'real',
     deps: 'mock',
+    column: 3,
+    click: 4,
   },
 ];
 
@@ -46,7 +66,13 @@ const deps = ['Database', 'Email / external API'];
 <template>
   <div class="scopes">
     <div class="panels">
-      <section v-for="panel in panels" :key="panel.title" class="panel">
+      <section
+        v-for="panel in panels"
+        :key="panel.title"
+        v-click="panel.click"
+        class="panel"
+        :style="{ gridColumn: panel.column }"
+      >
         <h3>{{ panel.title }}</h3>
         <div class="stack">
           <div class="box" :class="panel.component">
@@ -60,7 +86,6 @@ const deps = ['Database', 'Email / external API'];
 
           <div class="box" :class="panel.runtime">
             <span class="name">SvelteKit client runtime</span>
-            <span class="sub">remote client · serialization · forms</span>
           </div>
 
           <div class="link" :class="{ off: panel.runtime === 'absent' && !panel.input }">
@@ -71,11 +96,11 @@ const deps = ['Database', 'Email / external API'];
           <div class="box" :class="panel.handler">
             <template v-if="panel.handler === 'mock'">
               <span class="pill mono">mockRemote(fn)</span>
-              <span class="sub struck">Remote function handler</span>
+              <span class="sub">Remote function handler</span>
             </template>
             <template v-else>
               <span class="name">Remote function handler</span>
-              <span class="sub mono">.remote.ts · on the server</span>
+              <span class="sub mono">.remote.ts</span>
             </template>
           </div>
 
@@ -127,6 +152,7 @@ const deps = ['Database', 'Email / external API'];
 }
 
 .panel {
+  grid-row: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -135,9 +161,10 @@ const deps = ['Database', 'Email / external API'];
 
 .panel h3 {
   margin: 0;
-  font-size: 19px;
+  font-size: 16.5px;
   font-weight: 800;
   letter-spacing: -0.01em;
+  white-space: nowrap;
   text-align: center;
   color: var(--ink);
 }
@@ -149,8 +176,8 @@ const deps = ['Database', 'Email / external API'];
   grid-template-rows: 1fr 14px 1fr 30px 1fr 14px 1fr;
   padding: 12px 10px;
   border-radius: 14px;
-  background: #f6f8fb;
-  border: 1px solid #e4e4e7;
+  background: #fff;
+  border: 1px solid #cbd5e1;
 }
 
 .box {
@@ -177,7 +204,7 @@ const deps = ['Database', 'Email / external API'];
   white-space: nowrap;
 }
 .sub {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--quiet);
 }
@@ -205,18 +232,15 @@ const deps = ['Database', 'Email / external API'];
   font-weight: 700;
 }
 
-/* Not in the test: grey, struck through. */
+/* Not in the test: a thin grey outline, dark grey text. */
 .box.absent {
   border: 1.5px solid var(--line);
   background: transparent;
 }
 .box.absent .name,
-.box.absent .sub,
-.struck {
+.box.absent .sub {
   color: var(--quiet);
   font-weight: 600;
-  text-decoration: line-through;
-  text-decoration-color: #94a3b8;
 }
 
 .pill {
@@ -290,6 +314,6 @@ const deps = ['Database', 'Email / external API'];
 }
 .swatch.absent {
   border: 1.5px solid var(--line);
-  background: #f6f8fb;
+  background: #fff;
 }
 </style>

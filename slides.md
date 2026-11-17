@@ -80,7 +80,7 @@ class: tight
 # Three ways this goes
 
 <div class="cols cols-3">
-<div>
+<div v-click>
 
 ### Builds it again
 
@@ -397,7 +397,7 @@ const { Story } = preview.meta({
 </div>
 <div class="tile newdocs">
 
-### New Svelte docs
+### Complete Svelte docs
 
 storybook.js.org
 
@@ -410,32 +410,31 @@ storybook.js.org
 import { goto } from '$app/navigation';
 import { page } from '$app/state';
 
-page.url = new URL('http://localhost/posts/new');
+page.url = new URL('http://localhost/posts');
 expect(goto).toHaveBeenCalledWith('/posts/1');
 ```
 
 </div>
 <div class="tile agentdocs">
 
-### Docs for agents
+### Agent docs
 
 ```sh
-$ npx storybook tools docs list
+npx storybook tools docs list
 ```
 
 ```svelte
 <!-- @component …
 @summary starts an action… -->
-/** `sm` for small places… */
 ```
 
 </div>
 <div class="tile tests">
 
-### Story tests + a11y
+### Agent tests
 
 ```sh
-$ npx storybook tools test run
+npx storybook tools test run
 ✓ 247 stories, no violations
 ```
 
@@ -445,7 +444,7 @@ $ npx storybook tools test run
 ### Agent review
 
 ```sh
-$ npx storybook tools review create
+npx storybook tools review create
 ```
 
 </div>
