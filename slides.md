@@ -65,10 +65,13 @@ layout: section
 Your agent doesn't know your components.
 
 ---
-layout: quote
+class: prompt
 ---
 
-# Build the New post page.
+<div class="chat">
+  <div class="msg user"><span class="who">You</span><div class="bubble">Build me an app</div></div>
+  <div class="msg agent"><span class="who">Agent</span><div class="bubble dots"><i></i><i></i><i></i></div></div>
+</div>
 
 ---
 class: tight
@@ -84,14 +87,14 @@ class: tight
 <img src="/img/way-builds-again.png" />
 
 </div>
-<div>
+<div v-click>
 
 ### Reads everything
 
 <img src="/img/way-reads-everything.png" />
 
 </div>
-<div>
+<div v-click>
 
 ### Reads stale docs
 
@@ -128,7 +131,7 @@ $ npx storybook tools docs list
 ```
 
 ---
-class: code-xs tight
+class: code-14 tight
 ---
 
 # One source. Two readers.
@@ -146,16 +149,12 @@ $ npx storybook tools docs show --id ui-button
 
 # Button
 It starts an action, such as Publish or Delete.
-With `href` it is a link that looks like a button.
 
 ## Props
 variant?: "primary" | "secondary" | "ghost" | "danger" = "primary";
 size?: "sm" | "md" = "md";
-/** Makes the button a link. Use it for navigation, not for actions. */
 href?: string;
-type?: "submit" | "reset" | "button" = "button";
 disabled?: boolean = false;
-/** Shows a spinner and stops the button while its action runs. */
 loading?: boolean = false;
 
 ## Stories
@@ -163,10 +162,6 @@ loading?: boolean = false;
 The other actions of a view, next to the primary button.
 
 <Button variant="secondary">Save draft</Button>
-
-### Other Stories
-- Danger: An action that deletes data. Ask for confirmation first.
-- Loading: While the action runs, such as a form submit.
 ```
 
 </div>
@@ -400,15 +395,6 @@ const { Story } = preview.meta({
 ```
 
 </div>
-<div class="tile review">
-
-### Agent review
-
-```sh
-$ npx storybook tools review create
-```
-
-</div>
 <div class="tile newdocs">
 
 ### New Svelte docs
@@ -437,6 +423,12 @@ expect(goto).toHaveBeenCalledWith('/posts/1');
 $ npx storybook tools docs list
 ```
 
+```svelte
+<!-- @component …
+@summary starts an action… -->
+/** `sm` for small places… */
+```
+
 </div>
 <div class="tile tests">
 
@@ -448,14 +440,12 @@ $ npx storybook tools test run
 ```
 
 </div>
-<div class="tile codedocs">
+<div class="tile review">
 
-### Docs from your code
+### Agent review
 
-```svelte
-<!-- @component …
-@summary starts an action… -->
-/** `sm` for small places… */
+```sh
+$ npx storybook tools review create
 ```
 
 </div>
@@ -472,7 +462,7 @@ mockRemote(getPosts)
 </div>
 
 ---
-layout: statement
+layout: section
 ---
 
 # Remote Functions?
@@ -481,11 +471,7 @@ layout: statement
 
 # `vitest-plugin-sveltekit`
 
-| Test | What runs |
-| --- | --- |
-| Unit | the real remote function |
-| Mocked | component + SvelteKit's client runtime + a spy |
-| Real | component + the real remote function + a mocked database |
+<TestScopes />
 
 ---
 class: code-lg center-code

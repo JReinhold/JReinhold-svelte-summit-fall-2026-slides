@@ -56,7 +56,7 @@ html:not(.dark) .slidev-layout img:not(.qr):not(.photo) { box-shadow: 0 0 0 1px 
 .slidev-layout.split-cover img { box-shadow: none !important; }
 
 /* Light code panels. */
-html:not(.dark) { --sb-code-bg: #f6f8fb; }
+html:not(.dark) { --sb-code-bg: #ffffff; }
 html:not(.dark) .slidev-layout pre.slidev-code,
 html:not(.dark) .slidev-layout .slidev-code-wrapper pre { box-shadow: none; border: 1px solid var(--sb-border); }
 
@@ -71,7 +71,7 @@ html:not(.dark) .slidev-layout.intro p, html:not(.dark) .slidev-layout.end p, ht
 .slidev-layout h1 > code { font-family: var(--slidev-code-font-family); font-size: 0.85em; font-weight: 700; letter-spacing: -0.03em; background: none !important; color: inherit !important; padding: 0; }
 
 /* Bento: what is new in Storybook 11 for Svelte. */
-html .slidev-layout.bento { padding: 1.25rem; --slidev-code-font-size: 11px; --slidev-code-line-height: 1.5; }
+html .slidev-layout.bento { padding: 1.25rem; --slidev-code-font-size: 10.5px; --slidev-code-line-height: 1.5; }
 .bento-grid { display: grid; grid-template-columns: repeat(24, 1fr); grid-template-rows: repeat(12, 1fr); gap: 9px; width: 100%; height: 100%; }
 .tile { display: flex; flex-direction: column; justify-content: space-between; gap: 6px; min-width: 0; min-height: 0; overflow: hidden; padding: 13px 14px; border-radius: 16px; background: #f6f8fb; border: 1px solid var(--sb-border); }
 .tile h3 { font-size: 19px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
@@ -87,14 +87,13 @@ html .slidev-layout.bento { padding: 1.25rem; --slidev-code-font-size: 11px; --s
 .tile.hero img { top: 18px; right: 20px; }
 .tile.csf { grid-column: 9 / span 9; grid-row: 1 / span 4; }
 .tile.factories { grid-column: 18 / span 7; grid-row: 1 / span 4; }
-.tile.review { grid-column: 9 / span 8; grid-row: 5 / span 2; }
-.tile.newdocs { grid-column: 17 / span 8; grid-row: 5 / span 2; }
+.tile.review { grid-column: 11 / span 7; grid-row: 11 / span 2; }
+.tile.newdocs { grid-column: 9 / span 16; grid-row: 5 / span 2; }
 .tile.newdocs p { font-family: var(--slidev-code-font-family); font-size: 13px; font-weight: 700; color: #e0296b; }
 .tile.mocking { grid-column: 1 / span 10; grid-row: 7 / span 6; padding: 18px 20px; }
 .tile.mocking h3 { font-size: 29px; }
-.tile.agentdocs { grid-column: 11 / span 7; grid-row: 7 / span 3; }
+.tile.agentdocs { grid-column: 11 / span 7; grid-row: 7 / span 4; }
 .tile.tests { grid-column: 18 / span 7; grid-row: 7 / span 3; }
-.tile.codedocs { grid-column: 11 / span 7; grid-row: 10 / span 3; }
 .tile.remote { grid-column: 18 / span 7; grid-row: 10 / span 3; }
 
 html .slidev-layout.default h1 + .slidev-code-wrapper,
@@ -103,3 +102,19 @@ html .slidev-layout.default h1::after { margin-bottom: 0.2em; }
 
 /* No ligatures: `<!--` and `=>` stay as typed. */
 .slidev-layout pre, .slidev-layout code { font-variant-ligatures: none; }
+
+/* Light code: darker border, slightly heavier glyphs. */
+html:not(.dark) .slidev-layout pre.slidev-code { border-color: #cbd5e1 !important; font-weight: 500; }
+html .slidev-layout.code-14 { --slidev-code-font-size: 14px; --slidev-code-line-height: 1.5; }
+html .slidev-layout.code-14 .cols-doc { grid-template-columns: 3fr 7fr; }
+
+/* The prompt slide: a user message and an agent that starts to answer. */
+.chat { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2rem; width: 100%; max-width: 700px; margin: 0 auto; }
+.msg { display: flex; flex-direction: column; gap: 0.4rem; }
+.msg.user { align-items: flex-end; }
+.msg.agent { align-items: flex-start; }
+.msg .who { font-size: 1em; font-weight: 800; color: #475569; padding: 0 0.6rem; }
+.msg .bubble { padding: 1.1rem 1.8rem; border-radius: 30px; font-size: 2.8em; font-weight: 800; line-height: 1.1; }
+.msg.user .bubble { background: #1e293b; color: #fff; border-bottom-right-radius: 8px; }
+.msg.agent .bubble { background: #f1f5f9; border: 1px solid #cbd5e1; border-bottom-left-radius: 8px; display: flex; gap: 0.7rem; padding: 1.7rem 1.8rem; }
+.msg .dots i { width: 16px; height: 16px; border-radius: 50%; background: #64748b; }
