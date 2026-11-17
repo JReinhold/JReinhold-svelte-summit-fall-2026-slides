@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import '@fontsource-variable/nunito-sans';
+@import '@fontsource-variable/jetbrains-mono';
 
 :root {
   --sb-blue-50: #F3F9FE;
@@ -25,7 +26,7 @@
   --sb-text-muted: #64748b;
   --sb-text-inverse: #ffffff;
   --sb-border: #e4e4e7;
-  --sb-font-sans: 'Nunito Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sb-font-sans: 'Nunito Sans Variable', 'Nunito Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --sb-radius: 4px;
 }
 

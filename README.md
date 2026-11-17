@@ -1,11 +1,21 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# Your Agent Doesn't Know Your Components
 
-To start the slide show:
+Slides for the talk at Svelte Summit Fall 2026, by Jeppe Reinhold.
 
-- `npm install`
-- `npm run dev`
-- visit <http://localhost:3030>
+The deck is made with [Slidev](https://sli.dev). The theme comes from
+[huang-julien/slidev-storybook-theme](https://github.com/huang-julien/slidev-storybook-theme).
 
-Edit the [slides.md](./slides.md) to see the changes.
+## Run it
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
+```sh
+pnpm install
+pnpm dev
+```
+
+Open <http://localhost:3030>. Press `f` for fullscreen. The presenter view is at `/presenter`.
+
+## Files
+
+- `slides.md`: the slides and the presenter notes
+- `public/img`: the screenshots and diagrams
+- `layouts`, `styles`, `components`: the theme

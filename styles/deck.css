@@ -1,0 +1,57 @@
+/* Deck-specific rules for the Svelte Summit talk. */
+:root {
+  --slidev-code-font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+.slidev-layout pre,
+.slidev-layout code {
+  font-family: var(--slidev-code-font-family);
+}
+.slidev-layout.code-md { --slidev-code-font-size: 20px; --slidev-code-line-height: 1.6; }
+.slidev-layout.code-sm { --slidev-code-font-size: 14px; --slidev-code-line-height: 1.55; }
+.slidev-layout.code-xs { --slidev-code-font-size: 11px; --slidev-code-line-height: 1.5; }
+
+.slidev-layout.center-code { justify-content: center; }
+
+.cols { display: grid; gap: 1.5rem; flex: 1; min-height: 0; }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-doc { grid-template-columns: 2fr 3fr; align-items: center; }
+.cols > div { min-height: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.cols h3 { font-size: 1.15em; margin: 0; }
+.cols img { max-width: 100%; max-height: 100%; min-height: 0; object-fit: contain; border-radius: 8px; }
+
+.summary { margin-top: 2.5rem; text-align: left; }
+.summary h3 { font-size: 1.5em; margin-bottom: 0.6rem; }
+.summary code { display: inline-block; margin: 0.2rem 0; font-size: 1.05em !important; }
+.muted { color: var(--sb-text-muted); }
+.qr { width: 190px; border-radius: 10px; margin: 1.5rem auto 0.8rem; }
+.slidev-layout table { font-size: 1.25em; margin-top: 2rem; }
+.slidev-layout.code-lg { --slidev-code-font-size: 16px; --slidev-code-line-height: 1.6; }
+.slidev-layout.cover h1 { font-size: 3em; }
+.slidev-layout.cover p, .slidev-layout.intro p { font-size: 1.5em; margin-top: 1rem; }
+.slidev-layout.intro h1 { font-size: 3em; }
+.slidev-layout.section h1 { font-size: 4em; }
+.slidev-layout.section p { font-size: 1.2em; margin-top: 1rem; }
+.slidev-layout.quote h1 { font-size: 2.8em; }
+.slidev-layout.end p, .slidev-layout.center p { font-size: 1.3em; }
+.slidev-code-copy, .slidev-code-wrapper button { display: none !important; }
+.slidev-layout.tight { padding: 2rem 2.5rem; gap: 0.8rem; }
+.slidev-layout.tight h1 { font-size: 1.9em; margin: 0; }
+.slidev-layout.code-xs { --slidev-code-font-size: 10px; --slidev-code-line-height: 1.4; }
+.slidev-layout.tight .slidev-code-wrapper { margin: 0; }
+.cols-doc { align-items: start; }
+
+/* Light deck: the divider slides are light too, and images get an edge. */
+html:not(.dark) .slidev-layout.statement,
+html:not(.dark) .slidev-layout.section,
+html:not(.dark) .slidev-layout.intro,
+html:not(.dark) .slidev-layout.end { background: var(--sb-bg); color: var(--sb-text); }
+html:not(.dark) .slidev-layout.statement h1,
+html:not(.dark) .slidev-layout.intro h1,
+html:not(.dark) .slidev-layout.end h1 { color: var(--sb-text); }
+html:not(.dark) .slidev-layout.section p,
+html:not(.dark) .slidev-layout.intro p,
+html:not(.dark) .slidev-layout.end p { color: var(--sb-text-muted); }
+html:not(.dark) .slidev-layout.intro .glow { display: none; }
+html:not(.dark) .slidev-layout img:not(.qr):not(.photo) { box-shadow: 0 0 0 1px var(--sb-border), 0 6px 24px rgb(15 23 42 / 0.08); }
+html:not(.dark) .slidev-layout pre { color: #e2e8f0; }
+.slidev-layout.split-cover img { box-shadow: none !important; }
