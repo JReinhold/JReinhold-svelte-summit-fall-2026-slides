@@ -20,6 +20,12 @@ handle: reinhold.is
 
 Svelte Summit · Fall 2026
 
+<!--
+Hi, I'm Jeppe. I work on the Storybook team at Chromatic.
+I spend all my time on open source, which is fantastic. The cherry on top: I'm responsible for Storybook's Svelte integration.
+Today is about the one part of Svelte that your agent can't learn from the Svelte docs: your components.
+-->
+
 ---
 layout: figure
 ---
@@ -28,11 +34,23 @@ layout: figure
 
 ![The Svelte docs page for AI tools](/img/svelte-ai-docs.png)
 
+<!--
+Paolo just gave an awesome talk about how agents get help to write Svelte.
+With the official Svelte AI tools, agents write good Svelte 5 today.
+That problem is close to solved.
+-->
+
 ---
 layout: statement
 ---
 
 # But not <span class="sb-gradient-text">your</span> Svelte.
+
+<!--
+But good Svelte code is only part of the problem.
+The agent knows Svelte. It does not know your Svelte: your components, your design system, your conventions.
+That is what this talk is about.
+-->
 
 ---
 layout: figure
@@ -42,11 +60,26 @@ layout: figure
 
 ![Storybook with the Input component, its stories and its controls](/img/storybook-input.png)
 
+<!--
+Last year I asked how many of you use Storybook with Svelte. Let's try again: hands up.
+For everyone else: Storybook is a local tool to work on your components in isolation. You develop, document and test them there.
+Each state of a component is a story. Here: the Input component, its stories on the left, its props as controls at the bottom.
+My talk from last year's Svelte Summit covers the basics, if you want more.
+-->
+
 ---
 layout: statement
 ---
 
 # Know · Verify · Review
+
+<!--
+Three problems, three parts.
+Know: how your agent learns your components.
+Verify: how your agent checks its own UI work.
+Review: how you check the agent's work.
+At the end: what else Storybook 11 brings to Svelte, and something experimental for remote functions.
+-->
 
 ---
 layout: section
@@ -56,6 +89,11 @@ layout: section
 
 Your agent doesn't know your components.
 
+<!--
+Problem one.
+Agents can learn Svelte. But they need to master your components.
+-->
+
 ---
 class: prompt
 ---
@@ -64,6 +102,12 @@ class: prompt
   <div class="msg user"><span class="who">You</span><div class="bubble">Build me an app</div></div>
   <div class="msg agent"><span class="who">Agent</span><div class="bubble dots"><i></i><i></i><i></i></div></div>
 </div>
+
+<!--
+You ask your agent to build something. Say, a "New post" page for a blog.
+Of course you want it to use the components you already have. They come from a library like Skeleton, or from your own design system.
+One of three things happens. Which one depends on how smart your model is.
+-->
 
 ---
 class: tight
@@ -95,6 +139,21 @@ class: tight
 </div>
 </div>
 
+<!--
+[click] One: the agent builds it again, from scratch.
+You have a Button. The agent writes a new button, with its own class.
+Older, smaller and cheaper models do this, unless you tell them not to.
+
+[click] Two: the agent reads everything.
+It greps and reads component source, and the places that use the components.
+It often gets it right. But it costs time and tokens, on every task.
+
+[click] Three: you wrote markdown docs for your agents, component by component.
+This works great, while the docs are correct.
+But it's a chore to keep them up to date. Here the doc says `kind`, and the component says `variant`.
+And they drift away from the docs you write for people.
+-->
+
 ---
 layout: figure
 ---
@@ -102,6 +161,13 @@ layout: figure
 # Your Storybook already knows
 
 ![The Button docs page in Storybook](/img/autodocs-button.png)
+
+<!--
+You already develop and document your components in Storybook.
+People already use it to understand your library: stories as examples, controls for the props, and written docs.
+This is the docs page for Button. Storybook makes it from the component and its stories.
+Your agent can have the same information.
+-->
 
 ---
 class: code-sm center-code
@@ -121,6 +187,12 @@ $ npx storybook tools docs list
 # Docs
 - Docs (ui-design-tokens--docs): The CSS custom properties for colour, type, space, …
 ```
+
+<!--
+Storybook 11 has a CLI made for agents: `storybook tools`.
+`docs list` gives every component: its ID and a one-line summary.
+It's cheap. The agent sees the whole library in a few hundred tokens, and picks what it needs.
+-->
 
 ---
 class: code-14 tight
@@ -160,6 +232,14 @@ The other actions of a view, next to the primary button.
 </div>
 </div>
 
+<!--
+Then it asks for one component, with `docs show`.
+On the left: the page people read. On the right: what the agent reads.
+One source, two readers.
+The agent gets the description, the props with types and defaults, and the stories as usage examples.
+When the component changes, both change. There is nothing extra to maintain.
+-->
+
 ---
 class: code-md center-code
 ---
@@ -174,6 +254,13 @@ class: code-md center-code
 4. `ui-review`: publish a review that shows the user what changed
 ```
 
+<!--
+How does the agent know to call these?
+Storybook adds this section to your AGENTS.md, and installs four skills.
+They follow the order of the work: look up components, write stories, test the stories, publish a review.
+Those are the three parts of this talk.
+-->
+
 ---
 layout: statement
 ---
@@ -181,8 +268,14 @@ layout: statement
 # Demo
 
 <!--
+Agents are slow, and I have 25 minutes. So I ran this session before the talk. It is a real run.
+
 SWITCH to the finished agent conversation, at the top.
-Show the prompt. Scroll to the agent's `docs list` and `docs show` calls. Point at the components it chose.
+Show the prompt.
+Scroll to the agent's `docs list` and `docs show` calls.
+Point at the components it chose.
+
+Say: it did not grep the source. It asked Storybook, and it used my components.
 -->
 
 ---
@@ -193,6 +286,16 @@ class: tight
 
 <HowItWorks />
 
+<!--
+How does this work?
+Docgen is the part of Storybook that reads your components and extracts the props. It has existed for a long time.
+For Storybook 11 we rewrote it from scratch. It now runs on the server, it's faster and more precise, and other tools can call it.
+It reads your components, stories and docs, and writes a manifest: a JSON file.
+Everything reads that manifest. Autodocs for people. The CLI and skills for your agent. MCP for other teams' agents.
+The manifest format is still experimental, so it is not documented yet.
+And your stories are already usage examples. The snippets we show people are the same ones the agent gets.
+-->
+
 ---
 class: tight
 ---
@@ -200,6 +303,16 @@ class: tight
 # For the whole team
 
 <RemoteMcp />
+
+<!--
+This also works for a whole team, or a whole company.
+Publish your Storybook to Chromatic, which is free, and you get an MCP server for that Storybook.
+An agent in another team connects to it, and knows your design system without your repo.
+You can also host it yourself, with the `@storybook/mcp` package.
+
+(Optional) If you use our local MCP addon today: everything in this talk works there too.
+But a dev server plus a local MCP server is awkward, so the CLI is where we are going.
+-->
 
 ---
 layout: section
@@ -209,11 +322,32 @@ layout: section
 
 How does the agent verify its own UI?
 
+<!--
+Problem two.
+Your agent now builds UI with your components, the way you want.
+But how does it check that the UI works?
+-->
+
 ---
 class: tight
 ---
 
 <TestScopeCompare />
+
+<!--
+An agent has many ways to check UI.
+The first: a real browser, or Playwright tests, against the whole app.
+They're great. But they're slow, and they need a backend.
+It is hard to get the UI into the one state you want to check.
+And the test covers much more than the component that changed.
+
+[click] A story test runs one component, in a real browser, with the remote functions or API calls mocked.
+No backend. Any state.
+It runs on Vitest browser mode. So why not use Vitest directly?
+The agent already has the story IDs from the docs. It keeps using them.
+The output is markdown. It can include accessibility violations.
+And the agent can show you the result: it links to the story in your running Storybook.
+-->
 
 ---
 class: code-sm
@@ -237,6 +371,14 @@ Received element is not disabled:
 Failed: 1 component test failed.
 ```
 
+<!--
+This is `test run`. It runs the story tests. Here, one fails.
+The story is "Submitting", for the post editor. It expects the submit button to be disabled while the form sends.
+Look at what the agent gets: the story ID, the assertion, the element, and the line.
+That is enough to fix it. No browser to drive, no screenshot to read.
+Accessibility violations come in the same output.
+-->
+
 ---
 class: tight
 ---
@@ -244,6 +386,13 @@ class: tight
 # The agent fixes it
 
 <BeforeAfter />
+
+<!--
+Before: the button stays active while the form sends. A user can click Save twice.
+The fix is one line. The agent passes the form's pending state to the Button's `loading` prop.
+After: the button is disabled and busy.
+The agent runs the test again, and it passes.
+-->
 
 ---
 layout: statement
@@ -253,7 +402,11 @@ layout: statement
 
 <!--
 SWITCH to the conversation, in the middle.
-Scroll to the agent's `npx storybook tools test run` and its result block. Point at the new story IDs.
+Scroll to the agent's `npx storybook tools test run` and its result block.
+Point at the new story IDs.
+
+Say: it wrote stories for the UI it built, and ran them. I did not ask. The skills told it to.
+Say: in this run, the tests pass. The slide before showed what a failure looks like.
 -->
 
 ---
@@ -282,6 +435,16 @@ button.primary { cursor: progress }
 /tmp/storybook/inspect/posts-posteditor--submitting.png
 ```
 
+<!--
+Today the agent sees test results and accessibility results.
+We are prototyping the next step: inspect.
+One call gives the rendered HTML, the CSS, the accessibility tree, a screenshot, and later traces.
+Each output is a flag. The agent turns on what the situation needs. It writes no test code and saves no files.
+This output is a sketch. The final format can change.
+Many harnesses do parts of this today. The difference: this works with any agent, any harness, any model.
+Your team gets the same tools, even when everyone has a different setup. That is true for everything I show today.
+-->
+
 ---
 layout: section
 ---
@@ -289,6 +452,15 @@ layout: section
 # 3 · Review
 
 How do **you** verify the agent?
+
+<!--
+Problem three.
+Your agent now builds UI that works. But how do you check it?
+You can't review UI by reading code. That promised land is reserved for backend engineers.
+You have to look at it, and play with it.
+The agent gives you a summary, and a summary is not the full picture.
+It forgets changes. Or it broke something in another place, and does not know.
+-->
 
 ---
 layout: statement
@@ -298,7 +470,13 @@ layout: statement
 
 <!--
 SWITCH to the conversation, at the end, then the review page in Storybook.
-Open the review link. Click three stories: the new page, the new drafts list, one changed component. Read one of the agent's notes aloud.
+
+Say: the agent ends its work with a review in Storybook, made for me.
+Open the review link.
+Click three stories: the new page, the new drafts list, one changed component.
+Read one of the agent's notes aloud.
+
+Say: what changed and why, right next to the story. And I can play with each one.
 -->
 
 ---
@@ -308,6 +486,15 @@ class: tight
 # How the review knows
 
 <ModuleGraph />
+
+<!--
+How does the review know which stories to show?
+Storybook sees which files changed. And Vite's module graph knows which files import which.
+Here Button changed. So every story that renders a Button is affected: Header, DeletePostButton, PostEditor, and the new page.
+`stories changed` gives the agent that list.
+The agent adds the why, from its own context.
+This is how you catch the regression that the agent did not know it caused.
+-->
 
 ---
 layout: center
@@ -342,6 +529,14 @@ layout: center
 </div>
 
 <p class="muted">Any agent. Any harness. Any model.</p>
+
+<!--
+To sum up.
+Know: your agent reads the same component docs that you write for people.
+Verify: your agent tests its work with story tests, and soon it can inspect stories too.
+Review: you get a UI walkthrough that the agent prepared.
+All of it is a CLI. It works with any agent, any harness, any model.
+-->
 
 ---
 class: bento
@@ -449,11 +644,32 @@ mockRemote(listPosts)
 </div>
 </div>
 
+<!--
+That was the agent work. Here is what else Storybook 11 brings to Svelte.
+The big one: Svelte is now a core framework.
+That sounds strange. But until now, Svelte was an integration that the community maintained.
+Now we commit to it: new Storybook features work great with Svelte too. Like everything you saw today.
+Svelte CSF is no longer an addon. It is built in.
+CSF Factories: you import your preview, and the types flow into every story.
+The Svelte docs got an overhaul, so everything is documented for Svelte.
+SvelteKit mocking is simpler. It is less special now: you import the real module, set values, and assert on it. The same pattern as any mock in Vitest or Storybook.
+Then the agent docs, tests and review.
+And one tile is marked work in progress.
+-->
+
 ---
 layout: section
 ---
 
 # Remote Functions?
+
+<!--
+Have you heard about remote functions?
+Have you tried to test them?
+Or worse: have you tried to test a component that uses them?
+Since they were announced, people keep asking me what to do with remote functions in Storybook.
+I think we finally have an answer.
+-->
 
 ---
 
@@ -533,10 +749,33 @@ test('signing in sets the session cookie', async () => {
 </div>
 
 <!--
-Clicks: unit test, unit test code, back, component test, story code, back, component + remote handler test, story code.
+We are experimenting with a new package, `vitest-plugin-sveltekit`, together with the Svelte core team.
+This is your application: a component, SvelteKit's client runtime, the remote function handler, and the database and email behind it.
+There are three ways to test it.
 
-After the component test code: SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
-Then show the `mockRemote` lines in one of the agent's new stories.
+[click] One: a unit test. Only the handler is real.
+
+[click] You import the remote function and call it. No server.
+`submitForm` sends form data to the handler. `mockRequestEvent` gives you the request event, so you can check the cookie.
+
+[click] (back to the diagram)
+
+[click] Two: a component test. The component and SvelteKit's client runtime are real. Only the handler is mocked.
+So all the client-side magic that connects the component to the handler still runs.
+
+[click] `mockRemote` takes the real remote function, and you give it a value. The same as any mock.
+The story then checks that the posts show up.
+Live queries work too: the mock is a generator function, and the component updates on each value.
+
+(Optional) SWITCH to the "Live" story in Storybook. Emit two values from the Live feed panel.
+
+[click] (back to the diagram)
+
+[click] Three: both together. The real handler runs in your component test.
+All of this still runs in the browser. So you mock what the handler depends on: the database and email.
+
+[click] The story adds a draft to the mocked database. The real `publishPost` handler runs.
+I click Publish, and check that the email was sent.
 -->
 
 ---
@@ -551,6 +790,13 @@ layout: center
   <span>Its Storybook</span>
   <b>vitest-plugin-sveltekit.netlify.app/storybook</b>
 </div>
+
+<!--
+None of this is released yet.
+It depends on changes in SvelteKit too.
+But you can look at it today: the example app, and its Storybook.
+Stay tuned. I hope we have something to announce soon.
+-->
 
 ---
 layout: end
@@ -568,3 +814,10 @@ $ npx storybook@next upgrade
 <div class="links">
   <b>storybook.js.org/docs/11/ai</b>
 </div>
+
+<!--
+Storybook 11 is in beta today. It goes stable in December.
+Try it with this one command.
+The AI docs are at this link.
+Thank you.
+-->
