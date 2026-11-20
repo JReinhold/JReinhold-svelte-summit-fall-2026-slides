@@ -1,6 +1,13 @@
 <!-- Title slide: the talk on a gradient panel, the speaker on a black panel. -->
 <script setup lang="ts">
-defineProps<{ name: string; photo: string; handle?: string }>()
+import { computed } from 'vue'
+
+const props = defineProps<{ name: string; photo: string; handle?: string }>()
+
+// The photo path comes from the frontmatter, so the build does not add the base path to it.
+const photoSrc = computed(() =>
+  props.photo.startsWith('/') ? import.meta.env.BASE_URL + props.photo.slice(1) : props.photo,
+)
 </script>
 
 <template>
@@ -9,7 +16,7 @@ defineProps<{ name: string; photo: string; handle?: string }>()
       <slot />
     </div>
     <div class="speaker">
-      <img class="photo" :src="photo" alt="" />
+      <img class="photo" :src="photoSrc" alt="" />
       <div class="name">{{ name }}</div>
       <div v-if="handle" class="handle"><img src="/brand/bluesky.png" alt="" />{{ handle }}</div>
       <div class="badges">
