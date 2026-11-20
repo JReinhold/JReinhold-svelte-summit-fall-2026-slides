@@ -42,7 +42,7 @@ const photoSrc = computed(() =>
   flex-direction: column;
   justify-content: center;
   padding: 3rem;
-  background: url('/brand/gradient.png') center / cover;
+  background: url('/brand/gradient.jpg') center / cover;
 }
 .talk :deep(h1) {
   color: #fff;
