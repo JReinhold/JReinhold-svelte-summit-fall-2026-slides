@@ -107,14 +107,19 @@ html .slidev-layout.default h1::after { margin-bottom: 0.2em; }
 html:not(.dark) .slidev-layout pre.slidev-code { border-color: #cbd5e1 !important; font-weight: 500; }
 html .slidev-layout.code-14 { --slidev-code-font-size: 14px; --slidev-code-line-height: 1.5; }
 html .slidev-layout.code-14 .cols-doc { grid-template-columns: 3fr 7fr; }
+/* The screenshot takes the height of the code panel, so their edges line up. */
+html .slidev-layout .cols-doc { align-items: stretch; align-content: start; }
+html .slidev-layout .cols-doc .slidev-code-wrapper { margin: 0 !important; }
+.cols-doc .shot { position: relative; }
+.cols-doc .shot img { position: absolute; inset: 1px; width: calc(100% - 2px); height: calc(100% - 2px); max-height: none; object-fit: cover; object-position: top; }
 
 /* The prompt slide: a user message and an agent that starts to answer. */
 .chat { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2rem; width: 100%; max-width: 700px; margin: 0 auto; }
 .msg { display: flex; flex-direction: column; gap: 0.4rem; }
 .msg.user { align-items: flex-end; }
 .msg.agent { align-items: flex-start; }
-.msg .who { font-size: 1em; font-weight: 800; color: #475569; padding: 0 0.6rem; }
-.msg .bubble { padding: 1.1rem 1.8rem; border-radius: 30px; font-size: 2.8em; font-weight: 800; line-height: 1.1; }
+.msg .who { font-size: 1.5em; font-weight: 800; color: #475569; padding: 0 0.6rem; }
+.msg .bubble { padding: 1.1rem 1.8rem; border-radius: 30px; font-size: 2.1em; font-weight: 800; line-height: 1.1; }
 .msg.user .bubble { background: #1e293b; color: #fff; border-bottom-right-radius: 8px; }
 .msg.agent .bubble { background: #f1f5f9; border: 1px solid #cbd5e1; border-bottom-left-radius: 8px; display: flex; gap: 0.7rem; padding: 1.7rem 1.8rem; }
 .msg .dots i { width: 16px; height: 16px; border-radius: 50%; background: #64748b; }
@@ -144,17 +149,17 @@ html .slidev-layout .code-modal pre.slidev-code { padding: 1.4em 1.6em; border-r
 
 html .slidev-layout.code-15 { --slidev-code-font-size: 15px; --slidev-code-line-height: 1.5; }
 
-/* Bento tiles: white cards with two soft glows of brand colour in the right-hand corners,
-   away from the headline and the code. One hue family (blue, violet, pink) plus Svelte orange,
+/* Bento tiles: white cards with two soft glows of brand colour in two corners,
+   never the top left, where the headline is. The corners differ per tile (--ap, --bp). One hue family (blue, violet, pink) plus Svelte orange,
    all at the same lightness, so the grid reads as one set. */
 .tile:not(.hero) {
-  --a: 255; --b: 300;
+  --a: 255; --b: 300; --ap: 100% 0%; --bp: 100% 100%;
   position: relative;
   border: 1px solid rgb(15 23 42 / 0.09);
   box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 24px -14px rgb(15 23 42 / 0.18);
   background:
-    radial-gradient(ellipse 75% 95% at 100% 0%, oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 70%),
-    radial-gradient(ellipse 85% 85% at 100% 100%, oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 70%),
+    radial-gradient(ellipse 75% 95% at var(--ap), oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 70%),
+    radial-gradient(ellipse 85% 85% at var(--bp), oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 70%),
     #ffffff;
 }
 /* A little grain keeps the soft blends from looking flat. */
@@ -162,14 +167,14 @@ html .slidev-layout.code-15 { --slidev-code-font-size: 15px; --slidev-code-line-
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.tile.csf { --a: 45; --b: 0; }
+.tile.csf { --a: 45; --b: 0; --bp: 0% 100%; }
 .tile.factories { --a: 255; --b: 300; }
 .tile.newdocs { --a: 0; --b: 320; }
-.tile.mocking { --a: 280; --b: 350; }
-.tile.agentdocs { --a: 240; --b: 280; }
+.tile.mocking { --a: 280; --b: 350; --ap: 0% 100%; }
+.tile.agentdocs { --a: 240; --b: 280; --bp: 0% 100%; }
 .tile.tests { --a: 280; --b: 255; }
 .tile.review { --a: 320; --b: 0; }
-.tile.remote { --a: 70; --b: 30; }
+.tile.remote { --a: 70; --b: 30; --ap: 0% 100%; }
 .tile.factories { grid-row: 1 / span 6; }
 .tile.newdocs { grid-column: 9 / span 9; }
 
@@ -189,9 +194,25 @@ html .slidev-layout.end .slidev-code-wrapper { margin: 2rem 0 0 !important; text
 
 /* Wide, short tiles: round glows sized to the tile's height, side by side at the right end,
    so they do not stretch into flat bands. */
-.tile.newdocs, .tile.review {
+.tile.newdocs {
   background:
     radial-gradient(circle 190px at 100% -10%, oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 100%),
     radial-gradient(circle 170px at 68% 125%, oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 100%),
     #ffffff;
 }
+.tile.review {
+  background:
+    radial-gradient(circle 190px at 100% -10%, oklch(0.9 0.085 var(--a) / 0.95), oklch(0.9 0.085 var(--a) / 0) 100%),
+    radial-gradient(circle 170px at 0% 125%, oklch(0.92 0.07 var(--b) / 0.9), oklch(0.92 0.07 var(--b) / 0) 100%),
+    #ffffff;
+}
+
+/* The punch line under a diagram. */
+.slidev-layout p.punch { margin: 0.5rem 0 0; text-align: center; font-size: 1.3em; font-weight: 600; color: #475569; }
+
+/* The demo setup slide: the title, and a large QR code high on the slide. */
+.demo-setup { position: relative; }
+html .slidev-layout .setup-qr { position: absolute; top: 2rem; right: 2.5rem; width: 450px; height: 450px; margin: 0; border-radius: 0; image-rendering: pixelated; }
+.setup-link { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.4rem; padding-bottom: 4rem; }
+.setup-link span { font-size: 1.5em; font-weight: 700; color: #475569; }
+.setup-link b { font-family: var(--slidev-code-font-family); font-size: 2.6em; font-weight: 700; letter-spacing: -0.02em; color: #1e293b; }

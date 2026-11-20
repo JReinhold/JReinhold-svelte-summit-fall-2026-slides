@@ -16,7 +16,7 @@ photo: /brand/jeppe.jpg
 handle: reinhold.is
 ---
 
-# Your Agent Doesn't Know Your Components
+# Your Agent<br>Doesn't Know<br>Your Components
 
 Svelte Summit · Fall 2026
 
@@ -63,7 +63,7 @@ layout: figure
 <!--
 Last year I asked how many of you use Storybook with Svelte. Let's try again: hands up.
 For everyone else: Storybook is a local tool to work on your components in isolation. You develop, document and test them there.
-Each state of a component is a story. Here: the Input component, its stories on the left, its props as controls at the bottom.
+Each state of a component is a story. Here: the Input component, its stories on the left, its props as controls to the side or at the bottom.
 My talk from last year's Svelte Summit covers the basics, if you want more.
 -->
 
@@ -78,7 +78,7 @@ Three problems, three parts.
 Know: how your agent learns your components.
 Verify: how your agent checks its own UI work.
 Review: how you check the agent's work.
-At the end: what else Storybook 11 brings to Svelte, and something experimental for remote functions.
+At the end: what else the upcoming version of Storybook brings to Svelte.
 -->
 
 ---
@@ -99,7 +99,7 @@ class: prompt
 ---
 
 <div class="chat">
-  <div class="msg user"><span class="who">You</span><div class="bubble">Build me an app</div></div>
+  <div class="msg user"><span class="who">You</span><div class="bubble">Computer, add feature to my app</div></div>
   <div class="msg agent"><span class="who">Agent</span><div class="bubble dots"><i></i><i></i><i></i></div></div>
 </div>
 
@@ -146,7 +146,7 @@ Older, smaller and cheaper models do this, unless you tell them not to.
 
 [click] Two: the agent reads everything.
 It greps and reads component source, and the places that use the components.
-It often gets it right. But it costs time and tokens, on every task.
+It often gets it right. But source code shows how a component is built, not how you want it used.
 
 [click] Three: you wrote markdown docs for your agents, component by component.
 This works great, while the docs are correct.
@@ -191,7 +191,7 @@ $ npx storybook tools docs list
 <!--
 Storybook 11 has a CLI made for agents: `storybook tools`.
 `docs list` gives every component: its ID and a one-line summary.
-It's cheap. The agent sees the whole library in a few hundred tokens, and picks what it needs.
+The agent sees the whole library at once, and picks what it needs.
 -->
 
 ---
@@ -201,11 +201,7 @@ class: code-14 tight
 # One source. Two readers.
 
 <div class="cols cols-doc">
-<div>
-
-<img src="/img/autodocs-button-crop.png" />
-
-</div>
+<div class="shot"><img src="/img/autodocs-button-crop.png" /></div>
 <div>
 
 ```md
@@ -241,45 +237,93 @@ When the component changes, both change. There is nothing extra to maintain.
 -->
 
 ---
-class: code-md center-code
+class: tight demo-setup
 ---
+
+# “Demo”
+
+<div class="setup-link">
+  <span>The full transcript</span>
+  <b>is.gd/sbdemo</b>
+</div>
+
+<img class="qr setup-qr" src="/img/demo-qr.svg" alt="QR code that links to the full transcript of the demo run" />
+
+<!--
+Agents are slow, and I have 25 minutes. So I ran the demo before the talk.
+You will see it in three parts, one for each part of this talk. It is a real run, shortened to fit the slides.
+The app is Field Notes, a small blog made with SvelteKit. It has 31 components, and they all have stories.
+It runs Storybook 11, and AGENTS.md tells the agent to use the Storybook skills.
+The model is a small one: Haiku, at medium effort.
+And I gave it one prompt. You saw it earlier: build the New post page.
+The QR code goes to the full transcript, so you can read every step yourself.
+(Optional) Wait a moment so people can scan it.
+-->
+
+---
+class: code-15 tight
+disabled: true
+---
+
+# How the agent knows
 
 ```md
 <!-- AGENTS.md -->
 ## Storybook
+For every change to how the UI looks, follow these steps in order.
+Each step has a Storybook skill. …
 
-1. `component-docs`: look up the components to reuse
-2. `write-stories`: every component you change gets stories
-3. `test-stories`: run the story tests, fix what fails
-4. `ui-review`: publish a review that shows the user what changed
+1. `component-docs`: look up the components to reuse …
+2. `write-stories`: every component you create or change gets stories.
+3. `test-stories`: run the story tests after every change … and fix what fails.
+4. `ui-review`: publish a review that shows the user what changed …
+```
+
+```md
+<!-- .claude/skills/component-docs/SKILL.md -->
+Run `npx storybook skills component-docs` in a command of its own
+before you read any component's source, and follow its output. …
 ```
 
 <!--
 How does the agent know to call these?
-Storybook adds this section to your AGENTS.md, and installs four skills.
+Storybook adds this section to your AGENTS.md. It names four skills.
 They follow the order of the work: look up components, write stories, test the stories, publish a review.
 Those are the three parts of this talk.
--->
-
----
-layout: statement
----
-
-# Demo
-
-<!--
-Agents are slow, and I have 25 minutes. So I ran this session before the talk. It is a real run.
-
-SWITCH to the finished agent conversation, at the top.
-Show the prompt.
-Scroll to the agent's `docs list` and `docs show` calls.
-Point at the components it chose.
-
-Say: it did not grep the source. It asked Storybook, and it used my components.
+Storybook also installs the four skills. But look at the skill file, at the bottom. It is almost empty.
+It says one thing: run `storybook skills`, and follow the output.
 -->
 
 ---
 class: tight
+clicks: 4
+---
+
+# “Demo”
+
+<Transcript part="know" />
+
+<!--
+This is the start of the run. First, the prompt.
+The first thing it does is read AGENTS.md. So it loads the skills before it edits anything.
+
+[click] Each skill tells it to run a command. Storybook prints the instructions for that step, written for this project.
+
+[click] Then `docs list`. It gets every component in the project, with a summary.
+It picks from that list: PostEditor, PostMeta, Card.
+
+[click] Then `docs show`, once for each component it wants to use.
+Here is PostEditor. One prop, and the docs say: use it for the New post page.
+
+[click] And this is the page it wrote.
+It did not build a new form. It used my PostEditor, my EmptyState, my Skeleton.
+
+Say: it did not guess the props. It asked Storybook, and it used my components.
+-->
+
+---
+class: tight
+disabled: true
 ---
 
 # How it works
@@ -343,17 +387,14 @@ And the test covers much more than the component that changed.
 
 [click] A story test runs one component, in a real browser, with the remote functions or API calls mocked.
 No backend. Any state.
-It runs on Vitest browser mode. So why not use Vitest directly?
-The agent already has the story IDs from the docs. It keeps using them.
-The output is markdown. It can include accessibility violations.
-And the agent can show you the result: it links to the story in your running Storybook.
 -->
 
 ---
-class: code-sm
+class: code-sm tight
+disabled: true
 ---
 
-# A story test fails
+# What about Vitest browser mode?
 
 ```md
 $ npx storybook tools test run
@@ -361,74 +402,91 @@ $ npx storybook tools test run
 ## Failing Stories
 ### posts-posteditor--submitting
 expect(element).toBeDisabled()
-
 Received element is not disabled:
-  <button class="button primary md svelte-g9c1iq" type="submit" />
+  <button class="button primary md" type="submit" />
 
-    at src/lib/blog/PostEditor.stories.svelte:241:112
+## Accessibility Violations
+### ui-pagination--first-page - color-contrast
+- **Impact**: serious
+  **Message**: Element has insufficient color contrast of 2.58 … Expected 4.5:1
+  **Element**: <span class="step disabled">← Previous</span>
+  **Inspect**: http://127.0.0.1:6006/?path=/story/ui-pagination--first-page&…
 
 ## Result
-Failed: 1 component test failed.
+Failed: 1 component test failed, 14 accessibility checks failed.
 ```
 
 <!--
-This is `test run`. It runs the story tests. Here, one fails.
-The story is "Submitting", for the post editor. It expects the submit button to be disabled while the form sends.
-Look at what the agent gets: the story ID, the assertion, the element, and the line.
-That is enough to fix it. No browser to drive, no screenshot to read.
-Accessibility violations come in the same output.
+Some of you now think: Vitest browser mode does this too.
+You are right. Story tests run on Vitest browser mode. It is the same engine.
+So why does the agent not call Vitest directly? Three reasons. Two are on this slide.
+One: the output is made for an agent. It is markdown, with the story ID, the assertion and the element.
+And the accessibility violations come in the same run.
+Two: every violation has a link. It opens that story in Storybook, at the element that fails.
+The agent can give that link to you. You see the problem, interactive, and you tell the agent what to do.
+Three: it is faster. That is the next slide.
 -->
 
 ---
 class: tight
 ---
 
-# The agent fixes it
+# One Storybook. Many users.
 
-<BeforeAfter />
+<AttachedCli />
 
 <!--
-Before: the button stays active while the form sends. A user can click Save twice.
-The fix is one line. The agent passes the form's pending state to the Button's `loading` prop.
-After: the button is disabled and busy.
-The agent runs the test again, and it passes.
+The agent runs story tests with a CLI command, like the docs commands before.
+These commands do not start a new Storybook.
+They attach to the dev server that you already have running.
+That makes them fast. Vite is warm, the docs are already extracted, the test runner is up.
+With no dev server running, the commands still work. They are just slower.
+And you see what the agent does. When it runs the tests, the results show up in your sidebar, live.
+On the right is my sidebar after the agent's test run.
+It also works the other way. The agent can put things into the Storybook that you are looking at.
+Remember that one. We need it in part three.
 -->
 
 ---
-layout: statement
+class: tight
+clicks: 1
 ---
 
-# Demo
+# “Demo”
+
+<Transcript part="verify" />
 
 <!--
-SWITCH to the conversation, in the middle.
-Scroll to the agent's `npx storybook tools test run` and its result block.
-Point at the new story IDs.
+Back to the conversation. The page is written.
+The skill says: every component you create gets stories. So it writes them. Eight in total.
+This one is the page. It mocks the remote function, and it checks what the writer sees.
 
-Say: it wrote stories for the UI it built, and ran them. I did not ask. The skills told it to.
-Say: in this run, the tests pass. The slide before showed what a failure looks like.
+[click] Then it runs every story in the project.
+252 tests pass, and there are no accessibility violations.
+Nothing failed this time. When a test does fail, the agent sees the output from before, and fixes it.
 -->
 
 ---
 class: code-15 tight
 ---
 
-# Coming next: inspect
+# Coming soon: `inspect`
 
 ```md
 $ npx storybook tools stories inspect --storyId posts-posteditor--submitting
 
 ### HTML
-<button type="submit" disabled aria-busy="true">
+<button type="submit" disabled aria-busy="true" …>
   <span class="spinner"></span> Save changes
 </button>
 
 ### CSS
-button.primary { cursor: progress }
+button.primary { cursor: progress; … }
+…
 
 ### Accessibility tree
 - form "Edit post"
-  - textbox "Title"
+  - …
   - button "Save changes" [disabled] [busy]
 
 ### Screenshot
@@ -463,17 +521,30 @@ It forgets changes. Or it broke something in another place, and does not know.
 -->
 
 ---
-layout: statement
+class: tight
+clicks: 2
 ---
 
-# Demo
+# “Demo”
+
+<Transcript part="review" />
+
+<!-- Skipped to save time (the `stories changed` step). To bring it back: set showChanged in Transcript.vue, clicks: 3, and put these lines after the first note line, with [click] before "It publishes a review".
+Now it asks Storybook which stories its changes affect. Eight, all new.
+Storybook knows this from Vite's module graph: which files changed, and which stories import them.
+So it also finds the story of another component that the change broke.
+-->
 
 <!--
-SWITCH to the conversation, at the end, then the review page in Storybook.
+The same conversation, at the end. The tests pass.
+It publishes a review. Look at what it sends: a title, a description, and groups of stories. Each group has a reason.
 
-Say: the agent ends its work with a review in Storybook, made for me.
-Open the review link.
-Click three stories: the new page, the new drafts list, one changed component.
+[click] And its answer ends with a link to that review, made for me.
+
+[click] This is where the link goes.
+
+SWITCH to the review page in Storybook.
+Click three stories: the new page, the page with no drafts, the drafts list.
 Read one of the agent's notes aloud.
 
 Say: what changed and why, right next to the story. And I can play with each one.
@@ -483,58 +554,17 @@ Say: what changed and why, right next to the story. And I can play with each one
 class: tight
 ---
 
-# How the review knows
-
-<ModuleGraph />
-
-<!--
-How does the review know which stories to show?
-Storybook sees which files changed. And Vite's module graph knows which files import which.
-Here Button changed. So every story that renders a Button is affected: Header, DeletePostButton, PostEditor, and the new page.
-`stories changed` gives the agent that list.
-The agent adds the why, from its own context.
-This is how you catch the regression that the agent did not know it caused.
--->
-
----
-layout: center
----
-
 # Know · Verify · Review
 
-<div class="cols cols-3 summary">
-<div>
+<RunSummary />
 
-### Docs
-
-`docs list`
-
-`docs show`
-
-</div>
-<div>
-
-### Tests
-
-`test run`
-
-</div>
-<div>
-
-### Review
-
-`review create`
-
-</div>
-</div>
-
-<p class="muted">Any agent. Any harness. Any model.</p>
+<p class="punch">Any agent. Any harness. Any model.</p>
 
 <!--
-To sum up.
-Know: your agent reads the same component docs that you write for people.
-Verify: your agent tests its work with story tests, and soon it can inspect stories too.
-Review: you get a UI walkthrough that the agent prepared.
+To sum up, with the run you just saw. One prompt, a small model.
+Know: the agent read the same component docs that you write for people, and it reused five of my components.
+Verify: it wrote stories, and it tested its work with story tests. Soon it can inspect stories too.
+Review: I got a UI walkthrough that the agent prepared.
 All of it is a CLI. It works with any agent, any harness, any model.
 -->
 
@@ -661,14 +691,50 @@ And one tile is marked work in progress.
 layout: section
 ---
 
-# Remote Functions?
+# Testing Remote Functions?
+
+<div class="links">
+  <span>Example app</span>
+  <b>vitest-plugin-sveltekit.netlify.app</b>
+  <span>Its Storybook</span>
+  <b>vitest-plugin-sveltekit.netlify.app/storybook</b>
+  <span>The code</span>
+  <b>vitest-plugin-sveltekit.netlify.app/repo</b>
+</div>
 
 <!--
 Have you heard about remote functions?
 Have you tried to test them?
 Or worse: have you tried to test a component that uses them?
 Since they were announced, people keep asking me what to do with remote functions in Storybook.
-I think we finally have an answer.
+I think we finally have an answer. I do not have the time to show it today.
+It is experimental, and it is not released yet. It depends on changes in SvelteKit too.
+But you can look at it today: the example app, its Storybook, and the code on GitHub.
+Stay tuned. I hope we have something to announce soon.
+-->
+
+---
+layout: end
+class: code-md
+---
+
+# Storybook 11
+
+Beta today · stable December 2026
+
+```md
+$ npx storybook@next upgrade
+```
+
+<div class="links">
+  <b>storybook.js.org/docs/11/ai</b>
+</div>
+
+<!--
+Storybook 11 is in beta today. It goes stable in December.
+Try it with this one command.
+The AI docs are at this link.
+Thank you.
 -->
 
 ---
@@ -789,35 +855,13 @@ layout: center
   <b>vitest-plugin-sveltekit.netlify.app</b>
   <span>Its Storybook</span>
   <b>vitest-plugin-sveltekit.netlify.app/storybook</b>
+  <span>The code</span>
+  <b>vitest-plugin-sveltekit.netlify.app/repo</b>
 </div>
 
 <!--
 None of this is released yet.
 It depends on changes in SvelteKit too.
-But you can look at it today: the example app, and its Storybook.
+But you can look at it today: the example app, its Storybook, and the code on GitHub.
 Stay tuned. I hope we have something to announce soon.
--->
-
----
-layout: end
-class: code-md
----
-
-# Storybook 11
-
-Beta today · stable December 2026
-
-```md
-$ npx storybook@next upgrade
-```
-
-<div class="links">
-  <b>storybook.js.org/docs/11/ai</b>
-</div>
-
-<!--
-Storybook 11 is in beta today. It goes stable in December.
-Try it with this one command.
-The AI docs are at this link.
-Thank you.
 -->

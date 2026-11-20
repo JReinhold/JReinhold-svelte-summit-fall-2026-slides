@@ -35,16 +35,19 @@ const unrelated = [
       <text class="head-label" x="702" y="13">Stories</text>
 
       <!-- The changed file -->
-      <text class="tag" x="65" :y="y(2) - 29">changed</text>
-      <rect class="ring" x="-3" :y="y(2) - 22" width="136" height="44" rx="13" />
-      <rect class="real" x="1" :y="y(2) - 18" width="128" height="36" rx="9" />
-      <text class="file mono strong" x="65" :y="y(2) + 5">Button.svelte</text>
+      <text class="tag" x="65" :y="y(0) - 27">changed</text>
+      <rect class="ring" x="-3" :y="y(0) - 22" width="136" height="44" rx="13" />
+      <rect class="real" x="1" :y="y(0) - 18" width="128" height="36" rx="9" />
+      <text class="file mono strong" x="65" :y="y(0) + 5">Button.svelte</text>
 
-      <!-- Button.svelte to its own story and to the files that import it -->
-      <path class="wire arrow" :d="`M134 ${y(2)}C158 ${y(2)} 138 ${y(0)} 174 ${y(0)}H602`" />
-      <path class="wire arrow" :d="`M134 ${y(2)}C152 ${y(2)} 138 ${y(1)} 154 ${y(1)}H164`" />
-      <path class="wire arrow" :d="`M134 ${y(2)}H164`" />
-      <path class="wire arrow" :d="`M134 ${y(2)}C152 ${y(2)} 138 ${y(3)} 154 ${y(3)}H164`" />
+      <!-- Button.svelte to its own story, and down a trunk to the files that import it -->
+      <path class="wire arrow" :d="`M134 ${y(0)}H602`" />
+      <path
+        v-for="f in importers"
+        :key="f.file"
+        class="wire arrow"
+        :d="`M65 ${y(0) + 23}V${y(f.row) - 10}q0 10 10 10H164`"
+      />
 
       <g v-for="f in importers" :key="f.file">
         <rect class="box" x="166" :y="y(f.row) - 17" width="204" height="34" rx="9" />
